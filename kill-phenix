@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo "#pipe and run the script"
+ps -ef | grep python | grep Qnew | awk '{print "kill -9 " $2}'

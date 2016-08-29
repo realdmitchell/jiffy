@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ -e /tmp/grabnprint.png ]; then
+        rm -f /tmp/grabnprint.png
+fi
+
+xwd -display :0 -nobdrs -screen > /tmp/grabnprint.miff
+convert /tmp/grabnprint.miff /tmp/grabnprint.png
+rm -f /tmp/grabnprint.miff
+gwenview /tmp/grabnprint.png > /dev/null 2>&1
+

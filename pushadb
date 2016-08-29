@@ -1,0 +1,21 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+  echo "Usage: $0 filename"
+  exit 0
+fi
+
+IFS=$'\n' # Input Field Separator
+
+FILENAME_I=$1
+
+if [ -e $FILENAME_I ]; then
+		adb get-state
+		adb wait-for-device
+		#adb push $FILENAME_I /storage/sdcard1/scripts/today/
+		adb push -p $FILENAME_I /storage/28E4-1213/Download/
+	else
+		echo "File missing"
+		exit 0
+fi	
+

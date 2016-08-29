@@ -1,0 +1,18 @@
+#!/bin/sh
+if [ -z "$1" ]; then
+  echo "Convert ps to tif to png (default quality of tif = 150)"
+  echo "Usage: $0 input density"
+  exit 1
+fi
+if [ -z "$2" ]; then 
+	density=150
+fi
+rm -f /tmp/ps2png.ppm
+outname=`basename "$1" "ps"`
+gs -q -dNOPAUSE -dSAFER -sDEVICE=ppmraw -r"$density" -sOutputFile=/tmp/ps2png.ppm -- "$1"
+#convert /tmp/ps2png.ppm "$outname"tif
+convert /tmp/ps2png.ppm "$outname"png
+#gwenview  "$outname"png > /dev/null 2>&1
+display  "$outname"png > /dev/null 2>&1
+
+

@@ -1,0 +1,9 @@
+# Created By: Raven Morris
+# Created On: July 15th, 2002
+
+
+# Safely converts all spaces in filenames into underscores
+# Add this alias to your ~/.bash_login or ~/.profile or wherever you feel like =)
+
+alias Underscore_Filenames='for F in *\ *; do echo Fixing \""$F"\"; \mv -i "$F" "`echo "$F"|sed -e s/\ /_/g`"; done'
+

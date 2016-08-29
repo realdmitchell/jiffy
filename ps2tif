@@ -1,0 +1,20 @@
+#!/usr/bin/tclsh
+set args [llength $argv]
+set density "300"
+if {$args == 1} {
+} elseif {$args == 1} {
+  set postscriptfile [lindex $argv 0]
+} elseif {$args == 3 && ([lindex $argv 0] == "-density")} {
+  set postscriptfile [lindex $argv 2]
+  set density [lindex $argv 1]
+} else {
+  puts "usage: ps2tif -density DENSITY postscriptfile"
+  exit
+}
+set filebase [file rootname $postscriptfile]
+puts "running gs..."
+catch {exec gs -q -dNOPAUSE -dSAFER -sDEVICE=ppmraw -r$density -sOutputFile=/tmp/##$filebase.ppm -- $postscriptfile}
+puts "converting to tif file..."
+catch {exec convert /tmp/##$filebase.ppm $filebase.tif}
+catch {exec rm /tmp/##$filebase.ppm}
+

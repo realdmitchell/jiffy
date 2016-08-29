@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo "list all processes except the login-pts"
+echo \#kill -9 `ps -fu $USER  | grep -v pts  | awk 'NR != 1 {print $2}'`

@@ -1,0 +1,59 @@
+#!/bin/bash
+function getinfo {
+echo "My User Name is:"
+whoami
+echo " "
+echo "My Hostname is:"
+hostname
+echo " "
+echo "My Linux Version is:"
+if [ -f /etc/sun-release ]; then
+	R=`cat /etc/sun-release`
+elif [ -f /etc/SuSE-release ]; then
+	R=`cat /etc/SuSE-release`
+elif [ -f /etc/mandrake-release ]; then
+	R=`cat /etc/mandrake-release`
+elif [ -f /etc/redhat-release ]; then
+	R=`cat /etc/redhat-release`
+else R="unknown linux"
+fi
+echo "$R"
+echo " "
+echo "I am running kernel:"
+echo "Kernel $(uname -r) on $a $SMP$(uname -m)"
+echo " "
+echo "My MAC Address is:"
+mac=`/sbin/ifconfig | grep HWaddr | awk -F\  '{ print $5}'`
+echo "$mac"
+echo " "
+echo "My IP Number is:"
+ip=`/sbin/ifconfig | grep Bcast | awk -F:  '{ print $2}' | awk -F\  '{ print $1 }'`
+echo "$ip"
+echo " "
+echo "My Netmask is:"
+mask=`/sbin/ifconfig | grep Bcast | awk -F:  '{ print $4}'`
+echo "$mask"
+echo " "
+echo "My Gateway is:"
+gw=`/sbin/route | grep default | awk -F\  '{ print $2 }'`
+echo "$gw"
+echo " "
+echo "My Name Server(s) are:"
+ns=$(awk '/^nameserver/{print $2}' /etc/resolv.conf)
+echo "$ns"
+}
+if [ -f /usr/bin/zenity ]; then
+	getinfo > /tmp/getinfo
+	zenity --text-info  --title My\ Computer\ Information --filename=/tmp/getinfo --width=300 --height=200
+	rm -f /tmp/getinfo
+elif [ -f /usr/bin/kdialog ]; then
+        getinfo > /tmp/getinfo
+	kdialog --textbox /tmp/getinfo --title "My Computer Information" 300 200
+	rm -f /tmp/getinfo
+elif [ -f /opt/kde3/bin/kdialog ]; then
+	getinfo > /tmp/getinfo
+	kdialog --textbox /tmp/getinfo --title "My Computer Information" 300 200
+	rm -f /tmp/getinfo
+else
+	getinfo
+fi

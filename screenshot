@@ -1,0 +1,4 @@
+#!/bin/bash
+
+NOW="/tmp/"`date +%s`.png ; scrot ${NOW} 
+gwenview ${NOW} > /dev/null 2>&1

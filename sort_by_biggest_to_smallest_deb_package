@@ -1,0 +1,7 @@
+#!/bin/bash
+
+egrep "Package:.*-doc|^Size" /var/lib/dpkg/available | grep -A1 "doc" | grep -v "^--$" | awk '{ if ( $1 ~ "Package:" ) { pkg = $2 } else { print $2" "pkg } }' | sort -n | tail -n 19
+
+
+egrep "Package:*|^Size" /var/lib/dpkg/available | awk '{ if ($1 ~ "Package:" ) { pkg = $2 } else { print $2" "pkg } }' | sort -n | tail -n 19
+

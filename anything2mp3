@@ -1,0 +1,9 @@
+#!/bin/bash
+
+#mplayer  -vc null -vo null -ao pcm:fast $1
+echo "File test.wav will be created in /tmp folder"
+mplayer -novideo -ao pcm:file=/tmp/test.wav $1
+
+lame -h /tmp/test.wav
+mv /tmp/test.mp3 $1".mp3"
+
